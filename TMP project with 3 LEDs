@@ -1,0 +1,41 @@
+int analo =A0;//connected between the middle pin of the TMP sensor and the anologe A0 on the Arduino  
+int R =7;//the red LED with the Anode pin
+int Y =6;//the yellow LED with the Anode pin
+int B =5;//the blue LED with the Anode pin
+float mVolt, tmpc;//these are the values we will use to extract the temperature values as a Celsius degree by using 2 equations.
+
+void setup()
+{
+ pinMode(R, OUTPUT);
+ pinMode(Y, OUTPUT);
+ pinMode(B, OUTPUT);
+ Serial.begin(9600);
+ digitalWrite(7, LOW);
+ digitalWrite(6, LOW);
+ digitalWrite(5, LOW);
+}
+
+void loop()
+{
+
+mVolt = (analogRead(analo)*5.0)/1024.0;//change the Volte to milli Volte
+ tmpc = (mVolt - 0.5) * 100.0;//change it to c temp degree
+ Serial.print(tmpc); Serial.println(" degrees C");//here we will see  the values that cames from the TMP sensor to the Arduino on the serial monitor.
+  //Write your rules and conditions depending on the values from the last equation
+   if(tmpc > 80){ //if the temperature value is more or equal to 80,  the red light will on.
+ digitalWrite(7, HIGH);
+ digitalWrite(6, LOW);
+ digitalWrite(5, LOW);
+  }
+  
+  else if(tmpc > 40){//if the temperature value is more or equal to 40,  the red light will on.
+ digitalWrite(7, LOW);
+ digitalWrite(6, HIGH);
+ digitalWrite(5, LOW);
+  }
+  else if(tmpc > 0){//if the temperature value is more or equal to 0,  the red light will on.
+ digitalWrite(7, LOW);
+ digitalWrite(6, LOW);
+ digitalWrite(5, HIGH);
+  }
+}
